@@ -126,20 +126,20 @@ module Mongoid
 
       def set_callback
         unless callback_attached?("save", aliased_callback_name)
-          klass.set_callback(:save, :after, aliased_callback_name)
+          klass.set_callback(:save, :after, aliased_callback_name.to_sym)
         end
       end
 
       def set_destroy_callback
         unless callback_attached?("destroy", aliased_destroy_callback_name)
-          klass.set_callback(:destroy, :after, aliased_destroy_callback_name)
+          klass.set_callback(:destroy, :after, aliased_destroy_callback_name.to_sym)
         end
       end
 
       def alias_destroy_callback
         unless callback_defined?(aliased_destroy_callback_name)
-          klass.send(:alias_method, aliased_destroy_callback_name, destroy_callback_name)
-          klass.send(:public, aliased_destroy_callback_name)
+          klass.send(:alias_method, aliased_destroy_callback_name.to_sym, destroy_callback_name.to_sym)
+          klass.send(:public, aliased_destroy_callback_name.to_sym)
         end
       end
 
